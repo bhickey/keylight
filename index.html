@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>keylight.us</title>
+    <script src="iro.min.js"></script>
+    <style>
+      #picker {
+        margin-bottom: 1%;
+        margin-left : 1%;
+        position: fixed;
+        bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="picker"></div>
+    <script>
+      var layout = [
+      { 
+        component: iro.ui.Box,
+        options: {}
+      },
+      { 
+        component: iro.ui.Slider,
+        options: {
+          sliderType: 'hue'
+        }
+      }];
+      var colorPicker = new iro.ColorPicker('#picker', {
+        width: 200,
+        layout: layout,
+        layoutDirection: 'horizontal',
+      });
+      
+      colorPicker.on('color:change', function(color) {
+        document.body.style.backgroundColor = color.hexString;
+      });
+
+      colorPicker.on('color:init', function(color) {
+         const hexColor = window.location.hash;
+         if (hexColor == null || hexColor == "") {
+          return;
+        }
+        color.hexString = hexColor;
+      });
+
+      colorPicker.on(['input:start', 'input:end'], function(color) {
+         const hexColor = window.location.hash;
+         if (hexColor == color.hexColor) {
+           return;
+         }
+         window.location.hash = colorPicker.color.hexString;
+      });
+    </script>
+  </body>
+</html>
