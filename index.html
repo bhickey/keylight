@@ -17,11 +17,34 @@
         position: fixed;
         bottom: 0;
       }
+
+      #twiddle {
+        color: #FFF;
+        text-shadow:
+    -1px -1px 0 #000,
+     0   -1px 0 #000,
+     1px -1px 0 #000,
+     1px  0   0 #000,
+     1px  1px 0 #000,
+     0    1px 0 #000,
+    -1px  1px 0 #000,
+    -1px  0   0 #000;
+      }
     </style>
   </head>
   <body>
-    <div id="picker"></div>
+    <div id="picker"><div id="inner_picker"></div><span id="twiddle" onclick="twiddle()">↻</span></div>
     <script>
+
+      function twiddle() {
+        var elem = document.getElementById("inner_picker");
+        if (elem.style.display === "none") {
+          elem.style.display = "block";
+        } else {
+          elem.style.display = "none";
+        }
+      }
+
       var layout = [
       { 
         component: iro.ui.Box,
@@ -33,7 +56,7 @@
           sliderType: 'hue'
         }
       }];
-      var colorPicker = new iro.ColorPicker('#picker', {
+      var colorPicker = new iro.ColorPicker('#inner_picker', {
         width: 200,
         layout: layout,
         layoutDirection: 'horizontal',
